@@ -475,12 +475,20 @@
             </div>
           </div>
 
-          <!-- 발행처 로고 표기 (하단부 흰 바탕) -->
-          <div class="pt-5 mt-2 border-t border-skyBorder bg-white text-center space-y-2.5">
-            <div class="flex items-center justify-center gap-4">
-              <img src="서울지방고용노동청로고.png" alt="서울지방고용노동청 로고" onerror="this.onerror=null;this.src='https://placehold.co/240x64/FFFFFF/133C7E?text=서울지방고용노동청로고.png';" class="h-7 w-auto max-w-[44%] object-contain" />
+          <!-- 발행처 로고 표기 (하단부 흰 바탕 · 잘림 방지 비율 고정) -->
+          <div class="pt-5 mt-2 border-t border-skyBorder bg-white text-center space-y-2.5 overflow-hidden">
+            <div class="w-full flex items-center justify-center gap-3 px-2 overflow-hidden">
+              <div class="flex-1 min-w-0 flex items-center justify-end">
+                <img src="서울지방고용노동청로고.png" alt="서울지방고용노동청 로고"
+                  onerror="this.onerror=null;this.src='https://placehold.co/240x64/FFFFFF/133C7E?text=서울지방고용노동청로고.png';"
+                  style="height: 22px; max-height: 22px; width: auto; max-width: 100%; object-fit: contain;" />
+              </div>
               <span class="w-px h-4 bg-skyBorder shrink-0" aria-hidden="true"></span>
-              <img src="센터로고.png" alt="서울고용복지+센터 로고" onerror="this.onerror=null;this.src='https://placehold.co/240x64/FFFFFF/133C7E?text=센터로고.png';" class="h-7 w-auto max-w-[44%] object-contain" />
+              <div class="flex-1 min-w-0 flex items-center justify-start">
+                <img src="센터로고.png" alt="서울고용복지+센터 로고"
+                  onerror="this.onerror=null;this.src='https://placehold.co/240x64/FFFFFF/133C7E?text=센터로고.png';"
+                  style="height: 22px; max-height: 22px; width: auto; max-width: 100%; object-fit: contain;" />
+              </div>
             </div>
             <p class="text-[11px] text-slate-400">청년ON라운지 웹진 · 2026년 11월호</p>
           </div>
