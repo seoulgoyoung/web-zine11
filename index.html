@@ -48,6 +48,12 @@
       --base-font-size: 16.5px;
     }
 
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
     html {
       scroll-behavior: smooth;
       font-size: var(--base-font-size);
@@ -69,6 +75,25 @@
     /* 글자 크게 보기 모드 */
     html.font-large {
       --base-font-size: 18.5px;
+    }
+
+    /* 모바일 480px 프레임 가로 폭 강제 고정 */
+    #appShell {
+      width: 100%;
+      max-width: 480px;
+      overflow-x: hidden;
+    }
+
+    #zineViewport,
+    .zine-page {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    .zine-page img {
+      max-width: 100%;
+      height: auto;
     }
 
     /* 기사 본문 전용 여유로운 타이포그래피 & 문단 간격 */
@@ -211,7 +236,7 @@
 <body class="min-h-screen flex flex-col items-center">
 
   <!-- 모바일 웹진 프레임 컨테이너 (최대 480px 중앙 정렬) -->
-  <div id="appShell" class="w-full max-w-[480px] min-h-screen bg-white shadow-2xl relative flex flex-col pb-24">
+  <div id="appShell" class="w-full max-w-[480px] min-h-screen bg-white shadow-2xl relative flex flex-col pb-24 overflow-x-hidden">
 
     <!-- 상단 고정 내비게이션 헤더 -->
     <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-skyBorder">
@@ -250,9 +275,9 @@
     </header>
 
     <!-- =========================================================
-         메인 콘텐츠 뷰포트 (12개 페이지)
+         메인 콘텐츠 뷰포트 (12개 페이지 전체 수납)
     ========================================================== -->
-    <main id="zineViewport" class="flex-1">
+    <main id="zineViewport" class="flex-1 w-full max-w-full overflow-x-hidden">
 
       <!-- [PAGE 01] 표지 (#cover) + 전체 목차 -->
       <section id="page-cover" class="zine-page active">
@@ -1594,6 +1619,16 @@
 
     let currentIndex = 0;
 
+    function ensureViewportContainment() {
+      const viewport = document.getElementById('zineViewport');
+      if (!viewport) return;
+      document.querySelectorAll('.zine-page').forEach(sec => {
+        if (sec.parentElement !== viewport) {
+          viewport.appendChild(sec);
+        }
+      });
+    }
+
     function renderTocDrawer() {
       const list = document.getElementById('tocDrawerList');
       if (!list) return;
@@ -1615,6 +1650,8 @@
     }
 
     function navigateTo(target, updateUrl = true) {
+      ensureViewportContainment();
+
       const clean = (target || 'cover').replace('#', '');
       const idx = PAGES.findIndex(p => p.hash === clean || p.elId === clean);
       currentIndex = idx !== -1 ? idx : 0;
@@ -1784,6 +1821,7 @@
     });
 
     window.addEventListener('DOMContentLoaded', () => {
+      ensureViewportContainment();
       navigateTo(window.location.hash || 'cover', false);
     });
   </script>
