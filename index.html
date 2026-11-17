@@ -179,6 +179,34 @@
       transition: width 0.3s ease;
     }
   </style>
+
+  <script>
+    // 로컬 이미지 미존재 시 가로 넘침 없는 깔끔한 하늘색 플레이스홀더 프레임으로 자동 전환
+    function handleImgError(img) {
+      if (img.dataset.fallbackApplied === 'true') return;
+      img.dataset.fallbackApplied = 'true';
+      const label = img.getAttribute('alt') || '이미지';
+      const isRound = img.closest('.avatar-circle') !== null;
+
+      if (isRound) {
+        const span = document.createElement('span');
+        span.className = 'w-full h-full flex items-center justify-center bg-[#EAF3FC] text-[#133C7E] text-[10px] font-bold text-center px-1 leading-tight';
+        span.textContent = label.replace(/\.(jpg|png|jpeg|webp)$/i, '');
+        img.replaceWith(span);
+        return;
+      }
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'w-full max-w-full rounded-2xl bg-[#EAF3FC] border border-blue-200 px-4 py-8 flex flex-col items-center justify-center text-center gap-1.5 box-border overflow-hidden';
+      wrapper.innerHTML =
+        '<svg class="w-7 h-7 text-[#1E5BB8] opacity-75" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">' +
+        '<path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />' +
+        '</svg>' +
+        '<span class="text-xs font-extrabold text-[#133C7E] break-all">' + label + '</span>' +
+        '<span class="text-[11px] text-slate-500">동일 폴더에 이미지 파일 배치 시 자동 표시됩니다</span>';
+      img.replaceWith(wrapper);
+    }
+  </script>
 </head>
 <body class="min-h-screen flex flex-col items-center">
 
@@ -350,7 +378,7 @@
             </div>
           </div>
 
-                   <!-- 목차 그룹 3: 청년ON기자단 3기 & 리포트 -->
+          <!-- 목차 그룹 3: 청년ON기자단 3기 & 리포트 -->
           <div class="space-y-2">
             <div class="flex items-center gap-1.5">
               <span class="w-2 h-2 rounded-full bg-brandCoral"></span>
@@ -370,7 +398,7 @@
                 <span class="font-display font-extrabold text-sm text-brandCoral bg-white px-2.5 py-1 rounded-xl border border-skyBorder shrink-0">08</span>
                 <div class="min-w-0 flex-1">
                   <p class="font-extrabold text-[14.5px] text-brandDeep leading-snug">취업 포트폴리오 챌린지! AI 직무 탐색 &amp; 업무 자동화 편</p>
-                  <p class="text-xs text-slate-500 mt-0.5 truncate">대한상의와 함께한 AI를 활용한 직무 탐색&업무 자동화 실습</p>
+                  <p class="text-xs text-slate-500 mt-0.5 truncate">대한상의와 함께한 AI를 활용한 직무 탐색&amp;업무 자동화 실습</p>
                 </div>
                 <span class="text-brandCoral text-xs font-bold self-center">→</span>
               </button>
@@ -433,6 +461,7 @@
           </div>
         </div>
       </section>
+
       <!-- [PAGE 02] 현장 ZOOM-IN ① : 「알·쓸·센(SSEN)·톡」 -->
       <section id="page-02" class="zine-page">
         <div class="bg-skyBg px-5 pt-6 pb-5 border-b border-skyBorder">
@@ -575,6 +604,7 @@
                 <span class="hl-yellow">Gemini, NotebookLM, Perplexity, ChatGPT, Claude</span> 등 다양한 AI로 DART 공시, ALIO 경영공시, 채용 공고와 최신 보도자료를 분석했습니다. 복잡하고 방대한 기업 자료들을 AI로 알아보기 쉽게 정리하는 법을 배우며, 청년들이 원하는 기업에 한층 더 가까이 다가갈 수 있었습니다.
               </p>
             </div>
+          </div>
 
           <!-- 두 번째 사진: 기업분석2.jpg (서브타이틀 위) -->
           <img src="기업분석2.jpg" alt="조별 기업분석 실습 현장" onerror="this.onerror=null;this.src='https://placehold.co/640x360/EBF4FD/133C7E?text=기업분석2.jpg';" class="w-full h-auto rounded-2xl object-cover border border-skyBorder shadow-xs" />
@@ -655,7 +685,6 @@
 
           <!-- 두 번째 사진: 자기이해2.png -->
           <img src="자기이해2.png" alt="행동유형 그룹 상담 현장" onerror="this.onerror=null;this.src='https://placehold.co/640x360/EBF4FD/133C7E?text=자기이해2.png';" class="w-full h-auto rounded-2xl object-cover border border-skyBorder shadow-xs" />
-          </div>
 
           <!-- E-DISC 설명 (인터랙티브 4유형 탭 포함) -->
           <div class="p-5 rounded-2xl bg-skyBg/70 border border-skyBorder space-y-4">
@@ -828,7 +857,7 @@
           <!-- 두 번째 사진: 리턴인재2.jpg -->
           <img src="리턴인재2.jpg" alt="리턴인재2.jpg" onerror="handleImgError(this)" class="w-full max-w-full h-auto block object-cover rounded-2xl border border-blue-100" />
 
-          <!-- 1-2주차 (김정화 대표, 디지털리터러시협회 김묘은 대표 형광펜/볼드 없음) -->
+          <!-- 1-2주차 -->
           <div class="rounded-3xl bg-white border border-blue-100 shadow-sm p-5 space-y-3">
             <span class="inline-block px-3 py-1 rounded-full bg-[#1E5BB8] text-white text-xs font-extrabold">10.6. [1주차] - 10.13. [2주차]</span>
             <h3 class="text-[18px] font-extrabold text-[#133C7E]">경험이 곧 아이템!</h3>
@@ -1008,7 +1037,7 @@
           <!-- 두 번째 사진: 포트2.jpg -->
           <img src="포트2.jpg" alt="포트2.jpg" onerror="handleImgError(this)" class="w-full max-w-full h-auto block object-cover rounded-2xl border border-blue-100" />
 
-          <!-- 핵심 과정 (소통전략연구소 이상욱 대표 형광펜/볼드 없음) -->
+          <!-- 핵심 과정 -->
           <div class="space-y-3">
             <h3 class="font-extrabold text-[18px] text-[#133C7E]">핵심 과정: 문제 정의에서 업무 자동화 구현까지</h3>
             <div class="reading-body">
@@ -1298,7 +1327,7 @@
             </div>
           </div>
 
-          <!-- 1번 항목 ('중고신입' 형광펜/볼드 없음) -->
+          <!-- 1번 항목 -->
           <div class="rounded-2xl bg-white border border-blue-100 shadow-sm p-5 space-y-2.5">
             <h3 class="font-extrabold text-[17.5px] text-[#133C7E]">1. 지금 신입은 '중고신입'과 같은 자리를 두고 겨룬다</h3>
             <div class="reading-body">
@@ -1551,13 +1580,13 @@
     const PAGES = [
       { hash: 'cover',   elId: 'page-cover', num: '01', cat: 'COVER',         title: '표지 · Power-up: 완성되는 청년' },
       { hash: 'page-02', elId: 'page-02',    num: '02', cat: '현장 ZOOM-IN',  title: '세지만 꼭 필요한 TALK, 「알·쓸·센(SSEN)·톡」' },
-      { hash: 'page-03', elId: 'page-03',    num: '03', cat: '현장 ZOOM-IN',  title: "'알쓸센톡'에서의 배움을 실전으로! - AI를 활용한 기업분석" },
+      { hash: 'page-03', elId: 'page-03',    num: '03', cat: '현장 ZOOM-IN',  title: '‘알쓸센톡’에서의 배움을 실전으로! - AI를 활용한 기업분석' },
       { hash: 'page-04', elId: 'page-04',    num: '04', cat: '현장 ZOOM-IN',  title: '청년의 자기이해를 위한 「나를 알고 길을 찾다」' },
       { hash: 'page-05', elId: 'page-05',    num: '05', cat: "WHAT'S NEW?",   title: '자기탐색부터 면접까지, 취업 준비 한 번에 ON!' },
       { hash: 'page-06', elId: 'page-06',    num: '06', cat: "WHAT'S NEW?",   title: '해외 경험이 창업 아이템이 된다면? 「AI NEXT(창업가) 스쿨」' },
-      { hash: 'page-07', elId: 'page-07',    num: '07', cat: 'SPECIAL',       title: '청년ON기자단 3기 출격' },
-      { hash: 'page-08', elId: 'page-08',    num: '08', cat: '기자단 리포트', title: '대한상의와 함께한 취업 포트폴리오 챌린지!' },
-      { hash: 'page-09', elId: 'page-09',    num: '09', cat: '기자단 리포트', title: 'AI와 직무를 연결하는 사람들 : 강사&참여자 인터뷰' },
+      { hash: 'page-07', elId: 'page-07',    num: '07', cat: 'SPECIAL',       title: '청년ON기자단 3기 출격! 위촉식 & 기자단 6인 각오' },
+      { hash: 'page-08', elId: 'page-08',    num: '08', cat: '기자단 리포트', title: '취업 포트폴리오 챌린지! AI 직무 탐색 & 업무 자동화 편' },
+      { hash: 'page-09', elId: 'page-09',    num: '09', cat: '기자단 리포트', title: '취업 포트폴리오 챌린지 : 강사 & 참여자 인터뷰' },
       { hash: 'page-10', elId: 'page-10',    num: '10', cat: '기자단 리포트', title: '면접관 시선에서 청년과 소통공감 TALK 현장 LIVE' },
       { hash: 'page-11', elId: 'page-11',    num: '11', cat: '생생 체험기',   title: '현장브리핑: 모의면접DAY 체험기' },
       { hash: 'page-12', elId: 'page-12',    num: '12', cat: 'EVENTS & QUIZ', title: 'UPCOMING EVENTS & 도전! 퀴즈 ON' }
@@ -1637,30 +1666,45 @@
     }
 
     function toggleFontSize() {
-      const isLarge = document.body.classList.toggle('font-large');
+      const isLarge = document.documentElement.classList.toggle('font-large');
       const btn = document.getElementById('fontToggleBtn');
       if (btn) btn.textContent = isLarge ? '가-' : '가+';
       showToast(isLarge ? '글자 크기를 크게 설정했습니다.' : '기본 글자 크기로 설정했습니다.');
     }
 
     const DISC_TRAITS = {
-      D: '<strong class="text-[#F06A50]">D 주도형 (Dominance)</strong> · 목표 지향적이고 추진력이 뛰어나며, 빠른 의사결정과 도전적인 과제를 통해 성과를 내는 데 강점이 있습니다.',
+      D: '<strong class="text-brandCoral">D 주도형 (Dominance)</strong> · 목표 지향적이고 추진력이 뛰어나며, 빠른 의사결정과 도전적인 과제를 통해 성과를 내는 데 강점이 있습니다.',
       I: '<strong class="text-amber-600">I 사교형 (Influence)</strong> · 낙천적이고 사람들과 어울리기를 좋아하며, 밝은 에너지와 설득력 있는 커뮤니케이션으로 팀 분위기를 이끕니다.',
       S: '<strong class="text-teal-700">S 안정형 (Steadiness)</strong> · 차분하고 배려심이 깊으며, 꾸준한 실행력과 경청하는 태도로 조직 내 신뢰와 협력을 탄탄하게 구축합니다.',
-      C: '<strong class="text-[#1E5BB8]">C 신중형 (Conscientiousness)</strong> · 분석적이고 체계적이며, 정확한 데이터와 높은 완성도를 바탕으로 문제를 꼼꼼하게 해결하는 데 강점이 있습니다.'
+      C: '<strong class="text-brandBlue">C 신중형 (Conscientiousness)</strong> · 분석적이고 체계적이며, 정확한 데이터와 높은 완성도를 바탕으로 문제를 꼼꼼하게 해결하는 데 강점이 있습니다.'
     };
 
-    function selectDisc(type) {
+    const DISC_STYLES = {
+      D: {
+        active: 'disc-tab py-2 rounded-xl bg-brandCoral text-white border border-brandCoral transition',
+        inactive: 'disc-tab py-2 rounded-xl bg-white text-brandCoral border border-rose-200 transition'
+      },
+      I: {
+        active: 'disc-tab py-2 rounded-xl bg-amber-500 text-white border border-amber-500 transition',
+        inactive: 'disc-tab py-2 rounded-xl bg-white text-amber-600 border border-amber-200 transition'
+      },
+      S: {
+        active: 'disc-tab py-2 rounded-xl bg-brandMint text-white border border-brandMint transition',
+        inactive: 'disc-tab py-2 rounded-xl bg-white text-brandMint border border-teal-200 transition'
+      },
+      C: {
+        active: 'disc-tab py-2 rounded-xl bg-brandBlue text-white border border-brandBlue transition',
+        inactive: 'disc-tab py-2 rounded-xl bg-white text-brandBlue border border-skyBorder transition'
+      }
+    };
+
+    function selectDiscType(type) {
       ['D', 'I', 'S', 'C'].forEach(k => {
-        const btn = document.getElementById('disc-' + k);
+        const btn = document.getElementById('discBtn-' + k);
         if (!btn) return;
-        if (k === type) {
-          btn.className = 'py-2 rounded-xl bg-[#1E5BB8] text-white border border-[#1E5BB8] transition';
-        } else {
-          btn.className = 'py-2 rounded-xl bg-[#F4F8FD] text-[#133C7E] border border-blue-200 transition';
-        }
+        btn.className = k === type ? DISC_STYLES[k].active : DISC_STYLES[k].inactive;
       });
-      const box = document.getElementById('discBox');
+      const box = document.getElementById('discDetailBox');
       if (box && DISC_TRAITS[type]) box.innerHTML = DISC_TRAITS[type];
     }
 
